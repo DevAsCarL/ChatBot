@@ -4,7 +4,7 @@
   >
     <span class="w-3/4">
       <textarea
-        class="resize-none w-full h-10 border-2 border-black rounded-lg bg-gray-100"
+        class="resize-none w-full h-10 border-2 border-black rounded-lg bg-gray-100 px-2"
         v-model="messageWrited"
       ></textarea>
     </span>
