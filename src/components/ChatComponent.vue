@@ -13,5 +13,3 @@ import NavChat from "./molecules/chat/NavChat.vue";
 import MainChat from "./molecules/chat/MainChat.vue";
 import WritingBar from "./molecules/chat/WritingBar.vue";
 </script>
-
-<style scoped></style>

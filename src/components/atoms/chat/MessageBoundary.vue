@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-2/5 h-auto p-2 rounded-md"
+    class="max-w-[80%] md:max-w-sm h-auto p-2 rounded-md"
     :class="[isUser ? addClass.user : addClass.bot]"
   >
     {{ message }}
@@ -16,8 +16,8 @@ const props = defineProps({
 });
 
 const addClass = {
-  user: "bg-blue-500 text-white rounded-br-none",
-  bot: "bg-gray-400 rounded-bl-none",
+  user: "bg-blue-500 text-white rounded-br-none text-right",
+  bot: "bg-gray-400 rounded-bl-none ",
 };
 
 if (props.message) addClass.bot += " animate-pulse";
@@ -28,5 +28,3 @@ watch(() => props.message,() => {
   }
 );
 </script>
-
-<style></style>

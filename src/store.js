@@ -1,24 +1,30 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import dayjs from "dayjs";
 
 const AI_URL = "https://api.openai.com/v1/completions";
 
 export const useChatStore = defineStore("chat", () => {
   const messages = ref([]);
   const isButtonDisabled = ref(false);
+  const chatPrompts = ref("");
   function newMessage(newMessage, author) {
     if (newMessage != undefined && newMessage.length > 1) {
-      messages.value.push({ text: newMessage, isUser: author });
+      let now = dayjs(new Date()).format("dddd, hh:mm:ss a");
+      messages.value.push({ text: newMessage, isUser: author, timestamp: now });
       messages.value.push({ text: "...", isUser: false });
       isButtonDisabled.value = true;
       fetchAI(newMessage).then((data) => {
+        now = dayjs(new Date()).format("dddd, hh:mm:ss a");
         // prettier-ignore
         const {choices: [{ text }] } = data;
         messages.value[messages.value.length - 1] = {
           text: text.replace("Someone:", ""),
           isUser: false,
+          timestamp: now,
         };
         isButtonDisabled.value = false;
+        parseToPrompt();
       });
     }
   }
@@ -41,6 +47,7 @@ export const useChatStore = defineStore("chat", () => {
         You: Olá\n Someone: Oi, o que você está fazendo?.\n
         You: Salut\n Someone: Bonjour! Comment allez-vous?.\n
         You: Salut\n Someone: Salut tu fais quoi?.\n
+        ${chatPrompts.value}
         You: ${prompt}`,
         temperature: 0.5,
         max_tokens: 100,
@@ -52,6 +59,15 @@ export const useChatStore = defineStore("chat", () => {
     });
     return await res.json();
   }
+  // prettier-ignore
+  function parseToPrompt() {
+    messages.value.forEach((x, i) => {
+      chatPrompts.value += i % 2 == 0 
+                            ? `You: ${x.text}\n`
+                            : `Someone: ${x.text}\n`;
+    });
+  }
+
   return {
     isButtonDisabled,
     messages,

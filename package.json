@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tabler/icons-vue": "2.4.0",
+    "dayjs": "^1.11.7",
     "pinia": "2.0.30",
     "vue": "^3.2.45"
   },
