@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gray-200 h-96 w-full overflow-auto flex flex-col gap-2 pt-2"
+    class="bg-gray-200 h-96 w-full overflow-auto flex flex-col gap-2 py-2"
     ref="chatBoundary"
   >
     <section
