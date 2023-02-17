@@ -6,13 +6,16 @@
       <textarea
         class="resize-none w-full h-10 border-2 border-black rounded-lg bg-gray-100 px-2"
         v-model="messageWrited"
+        @keyup.enter="sendMessage"
       ></textarea>
     </span>
     <button
-      @click="store.newMessage(messageWrited, author)"
-      class="bg-blue-600 rounded-lg w-1/5 h-10 px-2 flex gap-2 items-center justify-center text-white border-2 border-black"
+      :disabled="isButtonDisabled"
+      @click="sendMessage"
+      class="bg-blue-600 rounded-lg w-1/5 h-10 px-2 flex gap-2 items-center justify-center text-white border-2 border-black disabled:bg-gray-500"
     >
-      Enviar <IconSend class="w-4" />
+      <p class="hidden md:block">Enviar</p>
+      <IconSend class="w-4" />
     </button>
   </div>
 </template>
@@ -22,9 +25,19 @@ import { IconSend } from "@tabler/icons-vue";
 
 import { useChatStore } from "@/store.js";
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
 const store = useChatStore();
+const { isButtonDisabled } = storeToRefs(store);
+
 const messageWrited = ref();
 const author = Boolean(true);
-</script>
 
-<style scoped></style>
+const sendMessage = (e) => {
+  if (e.shiftKey === true && e.key === "Enter") {
+    messageWrited.value += "\n";
+  } else {
+    store.newMessage(messageWrited.value, author);
+    messageWrited.value = "";
+  }
+};
+</script>

@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex justify-center flex-col overflow-hidden rounded-lg mt-5 w-3/4 m-auto lg:w-1/2"
+    class="flex justify-center flex-col overflow-hidden rounded-lg mt-24 w-3/4 m-auto lg:w-1/2"
   >
     <NavChat />
     <MainChat />
